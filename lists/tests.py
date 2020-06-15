@@ -8,9 +8,8 @@ class HomePageTest(TestCase):
     def test_uses_home_template(self):
         response = self.client.get('/')
         self.assertTemplateUsed(response,'home.html')
-        self.assertTrue(
-            any(row.text == '1:Buy peacock feathers' for row in rows),
-            "New to-do did not appear in table"
-        )
-                                
 
+    def test_can_save_a_POST_request(self):
+        response = self.client.post('/',data={'item_text':'A new list item'})
+        self.assertIn('A new list item',response.content.decode())
+        self.assertTemplateUsed(response,'home.html')
